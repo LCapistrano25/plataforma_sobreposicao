@@ -16,7 +16,8 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="zip_file">Arquivo ZIP</label>
-                    <input class="file-input" type="file" id="zip_file" name="zip_file" accept=".zip" required>
+                    <input class="file-input" type="file" id="zip_file" name="zip_file" accept=".zip">
+                    <small style="display:block;color:#666;margin-top:6px;">Opcional: envie um ZIP com shapefile ou informe apenas o número do CAR abaixo.</small>
                 </div>
 
                 <div class="form-group">
@@ -24,7 +25,7 @@
                     <input type="text" id="car_input" name="car_input" placeholder="Digite o número do CAR" value="{% if car_input %}{{ car_input }}{% endif %}">
                 </div>
 
-                <button type="submit">🚀 Enviar e Descompactar</button>
+                <button type="submit">🚀 Analisar</button>
             </form>
 
             {% if sucesso %}

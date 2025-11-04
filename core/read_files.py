@@ -49,6 +49,37 @@ def _carregar_dados_imoveis(excluir_car=None):
         print(f"CAR {excluir_car} excluído da análise. Restaram {len(dados_filtrados)} imóveis.")
     
     return dados_filtrados
+
+
+def _buscar_geometria_por_car(numero_car):
+    """Retorna a geometria WKT do imóvel com o número do CAR informado.
+
+    Usa o cache de imóveis se disponível; caso contrário, carrega os dados.
+    """
+    if numero_car is None or str(numero_car).strip() == "":
+        return None
+
+    # Garantir que o cache esteja populado
+    if cache.cache_imoveis is None:
+        _carregar_dados_imoveis()
+
+    try:
+        for coordenadas, car, _status in cache.cache_imoveis or []:
+            if str(car).strip() == str(numero_car).strip():
+                return coordenadas
+    except Exception:
+        pass
+
+    # Se não encontrado em cache, tenta carregar novamente e buscar
+    _carregar_dados_imoveis()
+    try:
+        for coordenadas, car, _status in cache.cache_imoveis or []:
+            if str(car).strip() == str(numero_car).strip():
+                return coordenadas
+    except Exception:
+        pass
+
+    return None
 def _carregar_dados_zoneamento():
     """Carrega os dados de zoneamento uma única vez e mantém em cache"""
     

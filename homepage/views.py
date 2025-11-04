@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.conf import settings
-from core.actions_files import fazer_busca_completa
+from core.actions_files import fazer_busca_completa, fazer_busca_por_car
 from helpers.extact_cordinates import extrair_cordenadas
 from helpers.clean import limpar_uploads_dir
 import zipfile
@@ -10,7 +10,7 @@ import os
 def homepage(request):
     if request.method == 'POST':
         
-        coordenadas_input = "POLYGON ((-49.61488861 -9.2536925, -49.61271028 -9.26027167, -49.61269 -9.26039417, -49.60878389 -9.2774275, -49.6255502997 -9.28127610719, -49.62119583 -9.26671, -49.62675194 -9.25840667, -49.61488861 -9.2536925))"
+        coordenadas_input = extrair_cordenadas()
                             
         car_input = request.POST.get('car_input', '').strip()
         
@@ -49,8 +49,21 @@ def upload_zip_car(request):
 
         context = { 'car_input': car_input }
 
+        # Permitir análise apenas pelo número do CAR quando nenhum ZIP for enviado
+        if not zip_file and car_input:
+            try:
+                resultado = fazer_busca_por_car(car_input)
+                return render(request, 'homepage/index.html', {
+                    'resultado': resultado,
+                    'car_input': car_input,
+                    'sucesso': True
+                })
+            except Exception as e:
+                context['erro'] = f'Erro ao analisar pelo CAR: {str(e)}'
+                return render(request, 'homepage/upload.html', context)
+
         if not zip_file:
-            context['erro'] = 'Por favor, envie um arquivo ZIP.'
+            context['erro'] = 'Por favor, envie um arquivo ZIP ou informe o número do CAR.'
             return render(request, 'homepage/upload.html', context)
 
         try:

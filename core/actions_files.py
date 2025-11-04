@@ -12,6 +12,7 @@ from core.process_files import (
 )
 from logica_sobreposicao import VerificadorSobreposicao
 from core.manage_data import cache
+from core.read_files import _buscar_geometria_por_car
 
 def _get_verificador():
     """Retorna uma instância única do verificador"""
@@ -85,6 +86,19 @@ def fazer_busca_completa(coordenadas, excluir_car=None):
     
     print(f"Busca completa finalizada. Total de sobreposições encontradas: {total_sobreposicoes}")
     return resultado_final
+
+
+def fazer_busca_por_car(numero_car):
+    """Realiza a busca completa usando a geometria do CAR informado.
+
+    - Obtém a geometria WKT do CAR.
+    - Exclui o próprio CAR da base de imóveis para evitar autointersecção.
+    """
+    geometria_wkt = _buscar_geometria_por_car(numero_car)
+    if not geometria_wkt or not str(geometria_wkt).strip():
+        raise ValueError(f"Não foi possível localizar a geometria para o CAR {numero_car}.")
+
+    return fazer_busca_completa(geometria_wkt, excluir_car=numero_car)
 
 
 # if __name__ == "__main__":
