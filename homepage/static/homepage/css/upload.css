@@ -360,15 +360,16 @@ input:checked:focus + .switch-left + .switch-right {
 }
 
 .input {
-  padding: 10px;
-  height: 40px;
+  padding: 12px;
+  height: 46px;
   width: 100%;
   border: 2px solid #0B2447;
   border-top: none;
   font-size: 16px;
   background: transparent;
   outline: none;
-  box-shadow: 7px 7px 0px 0px #0B2447;
+  box-sizing: border-box; /* evita overflow por causa da borda */
+  box-shadow: 0 7px 0 0 #0B2447; /* remove offset lateral para não ultrapassar */
   transition: all 0.5s;
 }
 
