@@ -24,13 +24,25 @@
                             <span class="switch-right">CAR</span>
                         </label>
                     </div>
-                    <small style="display:block;color:#666;margin-top:6px;">Escolha um modo. Você deve enviar um ZIP <strong>ou</strong> informar o número do CAR.</small>
+                    
                 </div>
 
                 <div class="form-group" id="group_zip">
-                    <label for="zip_file">Arquivo ZIP</label>
-                    <input class="file-input" type="file" id="zip_file" name="zip_file" accept=".zip">
-                    <small style="display:block;color:#666;margin-top:6px;">Envie um ZIP contendo um shapefile válido.</small>
+                    <!-- From Uiverse.io by jamrockjones --> 
+                    <div class="zip-widget">
+                        <div class="folder">
+                            <div class="front-side">
+                                <div class="tip"></div>
+                                <div class="cover"></div>
+                            </div>
+                            <div class="back-side cover"></div>
+                        </div>
+                        <label class="custom-file-upload" for="zip_file">
+                            <input type="file" id="zip_file" name="zip_file" accept=".zip,application/zip" />
+                            <span id="zip_label_text">Selecionar arquivo ZIP</span>
+                        </label>
+                    </div>
+
                 </div>
 
                 <div class="form-group" id="group_car">
@@ -62,6 +74,7 @@
             const groupZip = document.getElementById('group_zip');
             const groupCar = document.getElementById('group_car');
             const zipInput = document.getElementById('zip_file');
+            const zipLabelText = document.getElementById('zip_label_text');
             const carInput = document.getElementById('car_input');
             const clientError = document.getElementById('client_error');
             const form = document.getElementById('upload_form');
@@ -93,6 +106,16 @@
                 modoToggle.checked = true;
             }
             applyMode();
+
+            // Atualiza o texto do rótulo com o nome do arquivo selecionado
+            zipInput.addEventListener('change', function() {
+                if (zipInput.files && zipInput.files.length > 0) {
+                    zipLabelText.textContent = zipInput.files[0].name;
+                    clientError.style.display = 'none';
+                } else {
+                    zipLabelText.textContent = 'Selecionar arquivo ZIP';
+                }
+            });
 
             form.addEventListener('submit', function(e) {
                 const zipSelectedEmpty = modoToggle.checked && (!zipInput.files || zipInput.files.length === 0);
