@@ -17,13 +17,11 @@
                 <div class="form-group">
                     <label>Modo de análise</label>
                     <div style="display:flex;gap:14px;align-items:center;">
-                        <label style="display:flex;align-items:center;gap:6px;">
-                            <input type="radio" name="modo" id="modo_zip" value="zip">
-                            Enviar ZIP
-                        </label>
-                        <label style="display:flex;align-items:center;gap:6px;">
-                            <input type="radio" name="modo" id="modo_car" value="car">
-                            Informar número do CAR
+                        <!-- From Uiverse.io by bandirevanth --> 
+                        <label class="rocker rocker-small">
+                            <input type="checkbox" id="modo_toggle" name="modo_toggle">
+                            <span class="switch-left">zip</span>
+                            <span class="switch-right">shp</span>
                         </label>
                     </div>
                     <small style="display:block;color:#666;margin-top:6px;">Escolha um modo. Você deve enviar um ZIP <strong>ou</strong> informar o número do CAR.</small>
@@ -60,8 +58,7 @@
     
     <script>
         (function() {
-            const modoZip = document.getElementById('modo_zip');
-            const modoCar = document.getElementById('modo_car');
+            const modoToggle = document.getElementById('modo_toggle');
             const groupZip = document.getElementById('group_zip');
             const groupCar = document.getElementById('group_car');
             const zipInput = document.getElementById('zip_file');
@@ -70,42 +67,38 @@
             const form = document.getElementById('upload_form');
 
             function applyMode() {
-                if (modoZip.checked) {
+                // Considera: checked => ZIP, unchecked => CAR
+                if (modoToggle.checked) {
                     groupZip.style.display = '';
                     groupCar.style.display = 'none';
                     carInput.required = false;
                     zipInput.required = true;
-                } else if (modoCar.checked) {
+                } else {
                     groupZip.style.display = 'none';
                     groupCar.style.display = '';
                     zipInput.required = false;
                     carInput.required = true;
-                } else {
-                    groupZip.style.display = '';
-                    groupCar.style.display = '';
-                    zipInput.required = false;
-                    carInput.required = false;
                 }
                 clientError.style.display = 'none';
             }
-
-            modoZip.addEventListener('change', applyMode);
-            modoCar.addEventListener('change', applyMode);
+            
+            modoToggle.addEventListener('change', applyMode);
 
             const carPrefilled = (carInput.value || '').trim().length > 0;
             if (carPrefilled) {
-                modoCar.checked = true;
+                // Pré-preenche CAR => desmarca (usa CAR)
+                modoToggle.checked = false;
             } else {
-                modoZip.checked = true;
+                // Padrão => ZIP
+                modoToggle.checked = true;
             }
             applyMode();
 
             form.addEventListener('submit', function(e) {
-                const zipSelectedEmpty = modoZip.checked && (!zipInput.files || zipInput.files.length === 0);
-                const carSelectedEmpty = modoCar.checked && (carInput.value.trim() === '');
-                const noneSelectedEmpty = !modoZip.checked && !modoCar.checked && (!zipInput.files || zipInput.files.length === 0) && (carInput.value.trim() === '');
+                const zipSelectedEmpty = modoToggle.checked && (!zipInput.files || zipInput.files.length === 0);
+                const carSelectedEmpty = !modoToggle.checked && (carInput.value.trim() === '');
 
-                if (zipSelectedEmpty || carSelectedEmpty || noneSelectedEmpty) {
+                if (zipSelectedEmpty || carSelectedEmpty) {
                     e.preventDefault();
                     clientError.style.display = 'block';
                     clientError.textContent = '❌ Por favor, envie um ZIP ou informe o número do CAR.';
