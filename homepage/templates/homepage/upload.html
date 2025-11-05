@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload de ZIP e CAR</title>
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/upload.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/loader.css' %}">
 </head>
 
 <body>
@@ -94,6 +95,7 @@
 
         </div>
     </div>
+    {% include 'homepage/loader.html' %}
     <script>
         (function () {
             const modoToggle = document.getElementById('modo_toggle');
@@ -104,6 +106,7 @@
             const carInput = document.getElementById('car_input');
             const clientError = document.getElementById('client_error');
             const form = document.getElementById('upload_form');
+            const loader = document.getElementById('page-loader');
 
             function applyMode() {
                 // Considera: checked => ZIP, unchecked => CAR
@@ -151,6 +154,12 @@
                     e.preventDefault();
                     clientError.style.display = 'block';
                     clientError.textContent = '❌ Por favor, envie um ZIP ou informe o número do CAR.';
+                    return;
+                }
+
+                // Submissão válida => mostra loader até a próxima tela carregar
+                if (loader) {
+                    loader.classList.add('visible');
                 }
             });
         })();
