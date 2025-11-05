@@ -13,6 +13,18 @@
         <p style="margin-bottom: 20px;">
             <a href="{% url 'upload_zip_car' %}" style="display:inline-block;padding:10px 16px;border-radius:8px;background:#e9ecef;color:#333;text-decoration:none;">📦 Ir para Upload de ZIP e CAR</a>
         </p>
+        {% if municipio or uf %}
+        <div class="location-box" role="status" aria-live="polite">
+            <span class="location-icon" aria-hidden="true">📍</span>
+            <div class="location-text">
+                <span class="location-label">Localização</span>
+                <div class="location-value">
+                    {% if municipio %}<span class="city" title="Município">{{ municipio }}</span>{% endif %}
+                    {% if uf %}<span class="uf-badge" title="UF">{{ uf }}</span>{% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
         
 
         {% if erro %}

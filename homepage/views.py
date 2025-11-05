@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.conf import settings
 from core.actions_files import fazer_busca_completa, fazer_busca_por_car
+from helpers.get_municipio import localizar_cidade_estado
+from core.read_files import _buscar_geometria_por_car
 from helpers.extact_cordinates import extrair_cordenadas
 from helpers.clean import limpar_uploads_dir
 import zipfile
@@ -53,9 +55,20 @@ def upload_zip_car(request):
         if not zip_file and car_input:
             try:
                 resultado = fazer_busca_por_car(car_input)
+
+                municipio, uf = None, None
+                try:
+                    wkt_car = _buscar_geometria_por_car(car_input)
+                    if wkt_car:
+                        municipio, uf = localizar_cidade_estado(wkt_car)
+                except Exception:
+                    pass
+
                 return render(request, 'homepage/index.html', {
                     'resultado': resultado,
                     'car_input': car_input,
+                    'municipio': municipio,
+                    'uf': uf,
                     'sucesso': True
                 })
             except Exception as e:
@@ -111,10 +124,18 @@ def upload_zip_car(request):
             # Processar e retornar à homepage com os resultados
             try:
                 resultado = fazer_busca_completa(coordenadas_input, car_input)
+
+                municipio, uf = None, None
+                try:
+                    municipio, uf = localizar_cidade_estado(coordenadas_input)
+                except Exception:
+                    pass
                 return render(request, 'homepage/index.html', {
                     'resultado': resultado,
                     'coordenadas_recebidas': coordenadas_input,
                     'car_input': car_input,
+                    'municipio': municipio,
+                    'uf': uf,
                     'sucesso': True
                 })
             except Exception as e:
