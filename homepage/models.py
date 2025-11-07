@@ -67,7 +67,6 @@ class PhytoecologyArea(models.Model):
     def __str__(self):
         return self.phyto_name
 
-
 class EnvironmentalProtectionArea(models.Model):
     unit_name = models.CharField(
         max_length=100,
