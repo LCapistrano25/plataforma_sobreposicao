@@ -1,0 +1,8 @@
+<div class="area-item area-item--generico">
+    {% if area.area %}
+    <div class="area-value">Área sobreposta: {{ area.area|floatformat:4 }} ha</div>
+    {% endif %}
+    {% if area.item_info %}
+    <div class="area-info">{{ area.item_info }}</div>
+    {% endif %}
+</div>

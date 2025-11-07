@@ -1,0 +1,6 @@
+<div class="area-item area-item--zoneamento">
+    <div class="area-value">Área sobreposta: {{ area.area|floatformat:4 }} ha</div>
+    {% if area.item_info %}
+    <div class="area-info">{{ area.item_info }}</div>
+    {% endif %}
+</div>

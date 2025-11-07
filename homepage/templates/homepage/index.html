@@ -51,44 +51,7 @@
                 
             </div>
 
-            {% if resultado.resultados_por_base %}
-                <h3>🎯 Resultados por Base de Dados:</h3>
-                {% for base_resultado in resultado.resultados_por_base %}
-                <div class="base-resultado">
-                    <h4>{{ base_resultado.nome_base }}</h4>
-                    {% if base_resultado.areas_encontradas %}
-                        <p><strong>Sobreposições encontradas: {{ base_resultado.total_areas_com_sobreposicao }}</strong></p>
-                        {% for area in base_resultado.areas_encontradas %}
-                        <div class="area-item">
-                            <div class="area-value">Área sobreposta: {{ area.area|floatformat:4 }} ha</div>
-                            <div class="area-info">{{ area.item_info }}</div>
-                            {% if area.status %}
-                            <div class="area-status">Status: {{ area.status }}</div>
-                            {% endif %}
-                            {% if area.unidade %}
-                            <div class="area-details">
-                                <strong>Detalhes da APA:</strong>
-                                
-                                    <strong>Unidade:</strong> {{ area.unidade }}
-                                    <strong>Domínios:</strong> {{ area.dominios }}
-                                    <strong>Classe:</strong> {{ area.classe }}
-                                    <strong>Fundo Legal:</strong> {{ area.fundo_legal }}
-                                
-                            </div>
-                            {% endif %}
-                        </div>
-                        {% endfor %}
-                    {% else %}
-                        <p>✅ Nenhuma sobreposição encontrada nesta base de dados.</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            
-            {% else %}
-            <div class="area-item">
-                <p>✅ Nenhuma sobreposição encontrada com o polígono fornecido.</p>
-            </div>
-            {% endif %}
+            {% include "homepage/components/_resultados_por_base.html" %}
         </div>
         {% endif %}
 
