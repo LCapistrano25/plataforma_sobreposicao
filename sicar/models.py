@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class SicarRecord(models.Model):
     car_number = models.CharField(
         max_length=43,
@@ -9,6 +8,7 @@ class SicarRecord(models.Model):
         db_column='numero_car'
     )
     status = models.CharField(max_length=50)
+    
     geo_coordinates = models.TextField(
         verbose_name="Coordenadas Geográficas",
         db_column='coordenadas_geograficas'

@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class ZoningArea(models.Model):
     zone_name = models.CharField(
         max_length=100,
@@ -24,7 +23,6 @@ class ZoningArea(models.Model):
 
     def __str__(self):
         return self.zone_name
-
 
 class PhytoecologyArea(models.Model):
     phyto_name = models.CharField(
