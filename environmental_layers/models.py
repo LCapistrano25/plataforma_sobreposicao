@@ -30,8 +30,9 @@ class EnvironmentalProtectionArea(GeoBaseModel):
     unit_name = models.CharField(max_length=100, verbose_name="Nome da Unidade de Conservação", db_column='nome_unidade_conservacao')
     domains = models.CharField(max_length=100, verbose_name="Domínios", db_column='dominios')
     class_group = models.CharField(max_length=100, verbose_name="Grupo de Classe", db_column='grupo_classe')
-    legal_basis = models.CharField(max_length=100, verbose_name="Fundo Legal", db_column='fundo_legal')
-
+    legal_basis = models.CharField(max_length=100, verbose_name="Fundo Legal", db_column='fundo_legal', null=True, blank=True)
+    hash_id = models.CharField(max_length=64, verbose_name="Hash ID", db_column='hash_id', unique=True, null=True, blank=True)
+    
     class Meta:
         db_table = 'tb_area_apa'
         verbose_name = "Área de APA"

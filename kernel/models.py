@@ -4,7 +4,7 @@ from django.conf import settings
 
 class GeoBaseModel(models.Model):
     """Classe abstrata para modelos com dados geográficos."""
-    geo_coordinates = models.TextField(
+    geometry = models.TextField(
         verbose_name="Coordenadas Geográficas",
         db_column="coordenadas_geograficas"
     )
