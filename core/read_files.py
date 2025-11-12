@@ -2,6 +2,7 @@ import os
 from helpers.funcoes_utils import retornar_status_inteiro, retornar_lei
 from core.manage_data import cache
 import pandas as pd
+from environmental_layers.models import EnvironmentalProtectionArea
 
 def _carregar_dados_imoveis(excluir_car=None):
     
@@ -148,44 +149,19 @@ def _carregar_dados_fitoEcologias():
         print(f"Carregados {len(dados_fito)} dados de fitoecologias em cache")
     
     return cache.cache_fito_ecologias
+
 def _carregar_dados_apas():
-    """Carrega os dados de APAs uma única vez e mantém em cache"""
+    protection_area = EnvironmentalProtectionArea.objects.all()
+    dados_apas = []
     
-    arquivo_csv = r'csvvv/apas__Sheet1.csv'
+    for area in protection_area:
+        dados_apas.append({
+            'wkt': area.geometry,
+            'unidade': area.unit_name,
+            'dominios': area.domains,
+            'classe': area.class_group,
+            'fundo_legal': area.legal_basis
+        })
     
-   # Verificar se o arquivo existe
-    if not os.path.exists(arquivo_csv):
-        return []
-
-    # Verificar se precisa recarregar (arquivo foi modificado)
-    arquivo_modificado = os.path.getmtime(arquivo_csv)
+    return dados_apas
     
-    if cache.cache_apas is None or cache.cache_timestamp_apas != arquivo_modificado:
-        print("Carregando dados de APAs...")
-        
-        df = pd.read_csv(arquivo_csv, sep=",", encoding="utf-8")
-        print("✅ Arquivo CSV carregado com sucesso!\n")
-        
-        dados_apas = []
-        for _, row in df.iterrows():
-            if row.get('geometry'):  # Verificar se tem dados WKT na coluna 10
-                unidade = row.get('Unidades')
-                dominios = row.get('Dominios')
-                classe = row.get('Classes')
-                fundo_legal = retornar_lei(row.get('FundLegal'))
-                dados_apas.append({
-                    'wkt': row.get('geometry'),
-                    'unidade': unidade,
-                    'dominios': dominios,
-                    'classe': classe,
-                    'fundo_legal': fundo_legal
-                })
-        
-       
-        
-        cache.cache_apas = dados_apas
-        cache.cache_timestamp_apas = arquivo_modificado
-        print(f"Carregados {len(dados_apas)} dados de APAs em cache")
-    
-    return cache.cache_apas
-

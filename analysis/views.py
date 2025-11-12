@@ -22,26 +22,26 @@ def homepage(request):
                 # Chama a função de busca completa em todas as bases
                 resultado = fazer_busca_completa(coordenadas_input, car_input)
                 
-                return render(request, 'homepage/index.html', {
+                return render(request, 'analysis/index.html', {
                     'resultado': resultado,
                     'coordenadas_recebidas': coordenadas_input,
                     'car_input': car_input,
                     'sucesso': True
                 })
             except Exception as e:
-                return render(request, 'homepage/index.html', {
+                return render(request, 'analysis/index.html', {
                     'erro': f'Erro ao processar coordenadas: {str(e)}',
                     'coordenadas_recebidas': coordenadas_input,
                     'car_input': car_input,
                     'sucesso': False
                 })
         else:
-            return render(request, 'homepage/index.html', {
+            return render(request, 'analysis/index.html', {
                 'erro': 'Por favor, insira coordenadas válidas.',
                 'sucesso': False
             })
     
-    return render(request, 'homepage/index.html')
+    return render(request, 'analysis/index.html')
 
 
 def upload_zip_car(request):
@@ -64,7 +64,7 @@ def upload_zip_car(request):
                 except Exception:
                     pass
 
-                return render(request, 'homepage/index.html', {
+                return render(request, 'analysis/index.html', {
                     'resultado': resultado,
                     'car_input': car_input,
                     'municipio': municipio,
@@ -130,7 +130,7 @@ def upload_zip_car(request):
                     municipio, uf = localizar_cidade_estado(coordenadas_input)
                 except Exception:
                     pass
-                return render(request, 'homepage/index.html', {
+                return render(request, 'analysis/index.html', {
                     'resultado': resultado,
                     'coordenadas_recebidas': coordenadas_input,
                     'car_input': car_input,
@@ -139,7 +139,7 @@ def upload_zip_car(request):
                     'sucesso': True
                 })
             except Exception as e:
-                return render(request, 'homepage/index.html', {
+                return render(request, 'analysis/index.html', {
                     'erro': f'Erro ao processar coordenadas: {str(e)}',
                     'coordenadas_recebidas': coordenadas_input,
                     'car_input': car_input,
