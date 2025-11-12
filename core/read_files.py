@@ -6,7 +6,6 @@ from environmental_layers.models import EnvironmentalProtectionArea
 
 def _carregar_dados_imoveis(excluir_car=None):
     
-    
     caminho_csv = r"csvvv/conversao_imoveis.csv"
 
     # Verificar se o arquivo existe

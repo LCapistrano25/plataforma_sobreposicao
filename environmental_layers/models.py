@@ -4,7 +4,7 @@ from kernel.models import GeoBaseModel
 class ZoningArea(GeoBaseModel):
     zone_name = models.CharField(max_length=100, verbose_name="Nome da Zona", db_column='nome_zona')
     zone_acronym = models.CharField(max_length=50, verbose_name="Sigla da Zona", db_column='sigla_zona')
-
+    hash_id = models.CharField(max_length=64, verbose_name="Hash ID", db_column='hash_id', unique=True, null=True, blank=True)
     class Meta:
         db_table = 'tb_area_zoneamento'
         verbose_name = "Área de Zoneamento"
