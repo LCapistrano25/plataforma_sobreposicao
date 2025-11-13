@@ -8,15 +8,6 @@ class SicarRecord(GeoBaseModel):
         verbose_name="Número do CAR",
         db_column='numero_car'
     )
-
-    hash_id = models.CharField(
-        max_length=64, 
-        verbose_name="Hash ID", 
-        db_column='hash_id', 
-        unique=True, 
-        null=True, 
-        blank=True
-    )
     
     status = models.CharField(max_length=50)
 

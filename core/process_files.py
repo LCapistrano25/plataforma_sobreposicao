@@ -131,6 +131,7 @@ def _processar_base_dados_zoneamento(
             continue
     
     return _resultado_base(nome_base, areas_encontradas, quantidade_nao_avaliados)
+
 def _processar_base_dados_fitoecologias(
     polygon_wkt: str,
     dados: List[Tuple[str, str]],
