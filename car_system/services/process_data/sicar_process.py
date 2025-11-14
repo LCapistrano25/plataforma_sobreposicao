@@ -77,7 +77,7 @@ class SicarProcess:
         try:
             car_geom = getattr(self.verifier, "_get_geometria_cached", loads)(multi_wkt)
             return (
-                self.verifier._converter_para_hectares_otimizada(car_geom)
+                self.verifier._convert_to_hectares_optimized(car_geom)
                 if car_geom is not None
                 else 0
             )

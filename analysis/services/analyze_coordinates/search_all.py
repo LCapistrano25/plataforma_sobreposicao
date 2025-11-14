@@ -9,8 +9,7 @@ from environmental_layers.services.precess_data.protection_area_process import P
 from environmental_layers.services.load_data.zoning_loader import ZoningLoader
 from environmental_layers.services.load_data.phytoecology_loader import PhytoecologyLoader
 from environmental_layers.services.load_data.protection_area_loader import ProtectionAreaLoader
-from kernel.service.geometry_overlap_service import GeometryOverlapService
-from logica_sobreposicao import VerificadorSobreposicao
+from kernel.service.geometry_overlap_service import OverlapChecker
 
 
 class SearchAll:
@@ -24,7 +23,7 @@ class SearchAll:
 
     def __init__(self):
         # Instância única do verificador de sobreposição
-        self.verifier = VerificadorSobreposicao()
+        self.verifier = OverlapChecker()
         # Processadores por base de dados
         self.sicar_process = SicarProcess(self.verifier)
         self.zoning_process = ZoningProcess(self.verifier)

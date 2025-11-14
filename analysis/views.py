@@ -3,7 +3,6 @@ from django.conf import settings
 from analysis.services.analyze_coordinates.search_all import SearchAll
 from analysis.services.analyze_coordinates.search_for_car import SearchForCar
 from helpers.get_municipio import localizar_cidade_estado
-from core.read_files import _buscar_geometria_por_car
 from helpers.extact_cordinates import extrair_cordenadas
 from helpers.clean import limpar_uploads_dir
 import zipfile
@@ -58,7 +57,7 @@ def upload_zip_car(request):
 
                 municipio, uf = None, None
                 try:
-                    wkt_car = _buscar_geometria_por_car(car_input)
+                    wkt_car = SearchForCar().get_geometry(car_input)
                     if wkt_car:
                         municipio, uf = localizar_cidade_estado(wkt_car)
                 except Exception:
