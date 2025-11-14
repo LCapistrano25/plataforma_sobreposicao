@@ -7,7 +7,7 @@ def calculate_safe_overlap(
     multipolygon_wkt: str,
 ) -> Optional[float]:
     try:
-        return verificador.verificar_sobreposicao(
+        return verificador.check_overlap(
             polygon_wkt,
             multipolygon_wkt,
             "Polígono Grande",
