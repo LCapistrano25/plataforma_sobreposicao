@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Optional, Tuple
+import time
 from car_system.services.process_data.sicar_process import SicarProcess
 from car_system.services.read_files.sicar_loader import SicarRecordLoader
 
@@ -43,11 +44,16 @@ class SearchAll:
         # Cálculo de área do polígono (ha)
         area_size_ha: Optional[float] = self._compute_area_size_ha(polygon_wkt)
 
-        # Carregar dados das bases
+        # Log de tempo de leitura e processamento
+        start_read = time.perf_counter()
         data: Dict[str, List[Dict[str, Any]]] = self._load_data(excluir_car)
+        read_time = time.perf_counter() - start_read
+        print(f"Tempo de leitura dos dados: {read_time:.3f}s")
 
-        # Processar todas as bases de dados e obter lista de resultados por base
+        start_process = time.perf_counter()
         results_by_base: List[Dict[str, Any]] = self._process_all_bases(polygon_wkt, data)
+        process_time = time.perf_counter() - start_process
+        print(f"Tempo de processamento das bases: {process_time:.3f}s")
 
         # Agregar métricas globais a partir das bases
         all_found_areas, total_not_evaluated, total_overlaps = self._aggregate_base_results(
