@@ -1,3 +1,5 @@
+{% load static %}
+{% load l10n %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -5,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Termos e Condições - [Nome da Empresa]</title>
     <!-- Link para o arquivo CSS externo -->
-    <link rel="stylesheet" href="termos_de_uso.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'analysis/css/termos_de_uso.css' %}">
     
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
