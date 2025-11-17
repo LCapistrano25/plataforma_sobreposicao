@@ -1,3 +1,4 @@
+from control_panel.utils import get_file_management
 import geopandas as gpd
 import hashlib
 import json
@@ -50,6 +51,11 @@ class Command(BaseCommand):
                     }
                 )
                 results.append(obj.phyto_name)
+                
+                if created:
+                    print(f"[OK] {obj.phyto_name}")
+                else:
+                    print(f"[SKIP] {obj.phyto_name} já existe")
 
             except Exception as e:
                 print(f"[ERRO THREAD] {e}")
@@ -68,8 +74,15 @@ class Command(BaseCommand):
         num_threads = options["threads"]
         user = self.get_user()
 
-        archive_path = r"Regiões_Fitoecológicas_IBGE_TO.zip"
-        df = gpd.read_file(archive_path, encoding="utf-8")
+        archive_path = get_file_management()
+        
+        if not archive_path:
+            raise CommandError("Nenhum arquivo de fitoecologia foi configurado.")
+        
+        if not archive_path.phytoecology_zip_file.path:
+            raise CommandError("Nenhum arquivo de fitoecologia foi configurado.")
+        
+        df = gpd.read_file(archive_path.phytoecology_zip_file.path, encoding="utf-8")
 
         print(f"Total de linhas: {len(df)}")
 

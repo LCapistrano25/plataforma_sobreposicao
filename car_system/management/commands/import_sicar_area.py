@@ -1,3 +1,4 @@
+from control_panel.utils import get_file_management
 import geopandas as gpd
 import hashlib
 import json
@@ -73,8 +74,15 @@ class Command(BaseCommand):
         num_threads = options["threads"]
         user = self.get_user()
 
-        archive_path = r"documents\AREA_IMOVEL.zip"
-        df = gpd.read_file(archive_path, encoding="utf-8")
+        archive_path = get_file_management()
+        
+        if not archive_path:
+            raise CommandError("Nenhum arquivo de SICAR foi configurado.")
+        
+        if not archive_path.sicar_zip_file.path:
+            raise CommandError("Nenhum arquivo de SICAR foi configurado.")
+        
+        df = gpd.read_file(archive_path.sicar_zip_file.path, encoding="utf-8")
         df = df[["cod_imovel", "ind_status", "dat_atuali", "geometry"]]
         df = self.filter_existing_hashes(df)
     

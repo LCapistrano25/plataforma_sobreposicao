@@ -5,6 +5,7 @@ import json
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
 
+from control_panel.utils import get_file_management
 from environmental_layers.models import EnvironmentalProtectionArea
 
 class Command(BaseCommand):
@@ -20,21 +21,30 @@ class Command(BaseCommand):
         print("Iniciando leitura e inserção...")
         user = self.get_user()
 
-        archive_path = r'Apas.zip'
-        df = gpd.read_file(archive_path)
+        archive_path = get_file_management()
+        
+        if not archive_path:
+            raise CommandError("Nenhum arquivo de APA foi configurado.")
+        
+        if not archive_path.protection_zip_file.path:
+            raise CommandError("Nenhum arquivo de APA foi configurado.")
+        
+        df = gpd.read_file(archive_path.protection_zip_file.path, encoding="utf-8")
 
         for _, row in df.iterrows():
             formatted_data = self.format_data(row, user)
             # Aqui você pode salvar no banco (exemplo: MyModel.objects.get_or_create(hash=...))
             formatted_data["hash_id"] = self.generate_hash(formatted_data)
             try:
-                data = EnvironmentalProtectionArea.objects.get_or_create(
+                protection_area, created = EnvironmentalProtectionArea.objects.get_or_create(
                     hash_id=formatted_data["hash_id"],
                     defaults=formatted_data
                 )
                 
-                if data[1]:
-                    print(f"Dados inseridos: {formatted_data['unit_name']}")
+                if created:
+                    print(f"APA {protection_area.unit_name} criada.")
+                else:
+                    print(f"APA {protection_area.unit_name} já existe.")
                     
             except Exception as e:
                 print(f"Erro ao inserir dados: {e}")

@@ -5,6 +5,7 @@ import json
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
 
+from control_panel.utils import get_file_management
 from environmental_layers.models import ZoningArea
 
 class Command(BaseCommand):
@@ -20,8 +21,15 @@ class Command(BaseCommand):
         print("Iniciando leitura e inserção...")
         user = self.get_user()
 
-        archive_path = r'zoneamento_to.zip'
-        df = gpd.read_file(archive_path, encoding='utf-8')
+        archive_path = get_file_management()
+        
+        if not archive_path:
+            raise CommandError("Nenhum arquivo de zoneamento foi configurado.")
+        
+        if not archive_path.zoning_zip_file.path:
+            raise CommandError("Nenhum arquivo de zoneamento foi configurado.")
+        
+        df = gpd.read_file(archive_path.zoning_zip_file.path, encoding='utf-8')
 
         print(df.head())
         for _, row in df.iterrows():
@@ -29,7 +37,7 @@ class Command(BaseCommand):
             
             formatted_data["hash_id"] = self.generate_hash(formatted_data)
             try:
-                zoning_area = ZoningArea.objects.get_or_create(
+                zoning_area, created = ZoningArea.objects.get_or_create(
                     hash_id=formatted_data["hash_id"],
                     zone_name=formatted_data["zone_name"],
                     zone_acronym=formatted_data["zone_acronym"],
@@ -37,8 +45,12 @@ class Command(BaseCommand):
                     created_by=formatted_data["created_by"],
                     source=formatted_data["source"]
                 )
-                
-                print(f"Inserido: {zoning_area[0].zone_name}")
+                                
+                if created:
+                    print(f"Zona {zoning_area[0].zone_name} criada.")
+                else:
+                    print(f"Zona {zoning_area[0].zone_name} já existe.")
+                    
             except Exception as e:
                 print(f"Erro ao inserir linha: {e}")
                 
