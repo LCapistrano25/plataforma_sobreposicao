@@ -165,3 +165,6 @@ class UploadZipCarView(View):
                 'car_input': car_input,
                 'sucesso': False
             })
+
+def termos(request):
+    return render(request, 'analysis/termos_de_uso.html')

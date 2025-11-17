@@ -33,17 +33,6 @@ body {
     padding: 0 24px;
 }
 
-/* --- Cabeçalho (Header) --- */
-.site-header {
-    width: 100%;
-    padding: 20px 0;
-    background-color: var(--color-background);
-    /* Barra (border e shadow) removida */
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
 .main-nav {
     display: flex;
     justify-content: space-between;
