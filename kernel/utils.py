@@ -6,21 +6,18 @@ from typing import Any, Dict, List, Optional
 from kernel.service.city_state_locator_service import CityStateLocatorService
 from kernel.service.geometry_overlap_service import OverlapChecker
 
-
 def calculate_safe_overlap(
     checker: OverlapChecker,
     polygon_wkt: str,
-    multipolygon_wkt: str,
+    multi_wkt: str,
 ) -> Optional[float]:
     try:
-        return checker().check_overlap(
+        return checker.check_overlap(
             polygon_wkt,
-            multipolygon_wkt,
+            multi_wkt,
         )
     except Exception:
         return None
-
-
 
 def base_result(
     base_name: str,
