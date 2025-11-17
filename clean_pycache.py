@@ -9,6 +9,13 @@ import shutil
 import sys
 from pathlib import Path
 
+RESET = "\033[0m"
+BOLD = "\033[1m"
+RED = "\033[91m"
+GREEN = "\033[92m"
+YELLOW = "\033[93m"
+CYAN = "\033[96m"
+GRAY = "\033[90m"
 
 def clean_pycache(directory="."):
     """
@@ -20,41 +27,41 @@ def clean_pycache(directory="."):
     directory = Path(directory).resolve()
     removed_count = 0
     
-    print(f"Limpando cache Python em: {directory}")
-    print("-" * 50)
+    print(f"{CYAN}{BOLD}Limpando cache Python em: {directory}{RESET}")
+    print(f"{GRAY}{'-' * 50}{RESET}")
     
     # Procurar por diretórios __pycache__
     for pycache_dir in directory.rglob("__pycache__"):
         try:
-            print(f"Removendo: {pycache_dir}")
+            print(f"{YELLOW}Removendo: {pycache_dir}{RESET}")
             shutil.rmtree(pycache_dir)
             removed_count += 1
         except Exception as e:
-            print(f"Erro ao remover {pycache_dir}: {e}")
+            print(f"{RED}Erro ao remover {pycache_dir}: {e}{RESET}")
     
     # Procurar por arquivos .pyc individuais
     for pyc_file in directory.rglob("*.pyc"):
         try:
-            print(f"Removendo: {pyc_file}")
+            print(f"{YELLOW}Removendo: {pyc_file}{RESET}")
             pyc_file.unlink()
             removed_count += 1
         except Exception as e:
-            print(f"Erro ao remover {pyc_file}: {e}")
+            print(f"{RED}Erro ao remover {pyc_file}: {e}{RESET}")
     
     # Procurar por arquivos .pyo (Python optimized)
     for pyo_file in directory.rglob("*.pyo"):
         try:
-            print(f"Removendo: {pyo_file}")
+            print(f"{YELLOW}Removendo: {pyo_file}{RESET}")
             pyo_file.unlink()
             removed_count += 1
         except Exception as e:
-            print(f"Erro ao remover {pyo_file}: {e}")
+            print(f"{RED}Erro ao remover {pyo_file}: {e}{RESET}")
     
-    print("-" * 50)
+    print(f"{GRAY}{'-' * 50}{RESET}")
     if removed_count > 0:
-        print(f"✅ Limpeza concluída! {removed_count} item(s) removido(s).")
+        print(f"{GREEN}✅ Limpeza concluída! {removed_count} item(s) removido(s).{RESET}")
     else:
-        print("✅ Nenhum cache Python encontrado para remover.")
+        print(f"{GREEN}✅ Nenhum cache Python encontrado para remover.{RESET}")
 
 
 def main():
@@ -63,7 +70,7 @@ def main():
     if len(sys.argv) > 1:
         target_dir = sys.argv[1]
         if not os.path.exists(target_dir):
-            print(f"❌ Erro: Diretório '{target_dir}' não encontrado.")
+            print(f"{RED}❌ Erro: Diretório '{target_dir}' não encontrado.{RESET}")
             sys.exit(1)
     else:
         target_dir = "."
@@ -71,10 +78,10 @@ def main():
     try:
         clean_pycache(target_dir)
     except KeyboardInterrupt:
-        print("\n❌ Operação cancelada pelo usuário.")
+        print(f"\n{RED}❌ Operação cancelada pelo usuário.{RESET}")
         sys.exit(1)
     except Exception as e:
-        print(f"❌ Erro inesperado: {e}")
+        print(f"{RED}❌ Erro inesperado: {e}{RESET}")
         sys.exit(1)
 
 
