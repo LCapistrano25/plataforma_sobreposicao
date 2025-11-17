@@ -1,0 +1,76 @@
+{% load static %}
+{% load l10n %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Sobreposição de Áreas</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'analysis/css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>🗺️ Análise de Sobreposição de Áreas</h1>
+        <p style="margin-bottom: 20px;">
+            <a href="{% url 'upload_zip_car' %}" style="display:inline-block;padding:10px 16px;border-radius:8px;background:#e9ecef;color:#333;text-decoration:none;">📦 Ir para Upload de ZIP e CAR</a>
+        </p>
+        {% if municipio or uf %}
+        <div class="location-box" role="status" aria-live="polite">
+            <span class="location-icon" aria-hidden="true">📍</span>
+            <div class="location-text">
+                <span class="location-label">Localização</span>
+                <div class="location-value">
+                    {% if municipio %}<span class="city" title="Município">{{ municipio }}</span>{% endif %}
+                    {% if uf %}<span class="uf-badge" title="UF">{{ uf }}</span>{% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+
+        {% if erro %}
+        <div class="error-message">
+            <h3>❌ Erro:</h3>
+            <p>{{ erro }}</p>
+        </div>
+        {% endif %}
+
+        {% if resultado %}
+        <div class="areas-container">
+            <h2>📊 Resultados da Análise</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">{{ resultado.total_areas_com_sobreposicao }}</div>
+                    <div>Áreas com Sobreposição</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{% if resultado.tamanho_area %}{% localize on %}{{ resultado.tamanho_area|floatformat:4 }}{% endlocalize %}{% else %}-{% endif %}</div>
+                    <div>tamanho da Área (ha)</div>
+                </div>
+                
+            </div>
+
+            {% include "analysis/components/_resultados_por_base.html" %}
+        </div>
+        {% endif %}
+
+        <div class="info">
+            <p><strong>💡 Como usar:</strong></p>
+            <ul>
+                <li>Cole as coordenadas WKT do seu polígono no campo acima</li>
+                <li>Escolha entre busca simples (apenas imóveis) ou busca completa (todas as bases)</li>
+                <li>Clique em "Analisar Sobreposições" para verificar intersecções</li>
+                <li>Na busca completa, o sistema verificará:</li>
+                <ul>
+                    <li>🏠 Base de Dados Sicar</li>
+                    <li>🗺️ Base de Dados de Zoneamento</li>
+                    <li>🌿 Base de Dados de Fitoecologias</li>
+                    <li>🏞️ Base de Dados de APAs (Áreas de Proteção Ambiental)</li>
+                </ul>
+                <li>Os resultados mostrarão de qual base cada sobreposição foi encontrada</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<div class="area-item area-item--apas">
+    <div class="area-value">Área sobreposta: {{ area.area|floatformat:4 }} ha</div>
+    <div class="area-details">
+        <strong>Detalhes da APA:</strong>
+        {% if area.unidade %}<strong>Unidade:</strong> {{ area.unidade }}{% endif %}
+        {% if area.dominios %}<strong>Domínios:</strong> {{ area.dominios }}{% endif %}
+        {% if area.classe %}<strong>Classe:</strong> {{ area.classe }}{% endif %}
+        {% if area.fundo_legal %}<strong>Fundo Legal:</strong> {{ area.fundo_legal }}{% endif %}
+    </div>
+</div>

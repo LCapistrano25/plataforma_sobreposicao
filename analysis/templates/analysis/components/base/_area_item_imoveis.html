@@ -1,0 +1,9 @@
+<div class="area-item area-item--imoveis">
+    <div class="area-value">Área sobreposta: {{ area.area|floatformat:4 }} ha</div>
+    {% if area.item_info %}
+    <div class="area-info">{{ area.item_info }}</div>
+    {% endif %}
+    {% if area.status %}
+    <div class="area-status">Status: {{ area.status }}</div>
+    {% endif %}
+</div>
