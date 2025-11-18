@@ -100,3 +100,26 @@ class EnvironmentalProtectionArea(GeoBaseModel):
 
     def __str__(self):
         return self.unit_name
+class IndigenousArea(GeoBaseModel):
+    indigenous_name = models.CharField(
+        max_length=70, 
+        verbose_name="nome da terra indigena", 
+        db_column='NOME_AREA'
+    )
+    
+    hash_id = models.CharField(
+        max_length=64, 
+        verbose_name="Hash ID", 
+        db_column='hash_id', 
+        unique=True, 
+        null=True, 
+        blank=True
+    )
+   
+    class Meta:
+        db_table = 'tb_area_terra_indigena'
+        verbose_name = "terra indigena"
+        verbose_name_plural = "terras indigenas"
+
+    def __str__(self):
+        return self.indigenous_name

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ZoningArea, PhytoecologyArea, EnvironmentalProtectionArea
+from .models import ZoningArea, PhytoecologyArea, IndigenousArea, EnvironmentalProtectionArea
 # Register your models here.
 
 class ZoningAreaAdmin(admin.ModelAdmin):
@@ -35,3 +35,15 @@ class EnvironmentalProtectionAreaAdmin(admin.ModelAdmin):
         }),
     )
 admin.site.register(EnvironmentalProtectionArea, EnvironmentalProtectionAreaAdmin)
+
+class IndigenousAreaAdmin(admin.ModelAdmin):
+    list_display = ('indigenous_name', 'hash_id')
+    search_fields = ('indigenous_name',)
+        
+    fieldsets = (
+        (None, {
+            'fields': ('indigenous_name', 'hash_id', 'geometry')
+        }),   
+    )
+        
+admin.site.register(IndigenousArea, IndigenousAreaAdmin)
