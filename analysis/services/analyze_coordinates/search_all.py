@@ -5,16 +5,7 @@ from analysis.services.analyze_coordinates.helpers_service.process_all_data_serv
 from analysis.services.analyze_coordinates.helpers_service.search.final_result_builder import FinalResultBuilder
 from analysis.services.analyze_coordinates.helpers_service.search.processor_registry import ProcessorRegistry
 from analysis.services.analyze_coordinates.helpers_service.search.result_aggregator import ResultAggregator
-from car_system.services.process_data.sicar_process import SicarProcess
-from car_system.services.read_files.sicar_loader import SicarRecordLoader
 
-from environmental_layers.services.precess_data.zoning_loader_process import ZoningProcess
-
-from environmental_layers.services.precess_data.phytoecology_process import PhytoecologyProcess
-from environmental_layers.services.precess_data.protection_area_process import ProtectionAreaProcess
-from environmental_layers.services.load_data.zoning_loader import ZoningLoader
-from environmental_layers.services.load_data.phytoecology_loader import PhytoecologyLoader
-from environmental_layers.services.load_data.protection_area_loader import ProtectionAreaLoader
 from kernel.service.geometry_overlap_service import OverlapChecker
 from kernel.utils import calculate_area_ha
 

@@ -3,7 +3,7 @@ from car_system.models import SicarRecord
 
 @admin.register(SicarRecord)
 class SicarRecordAdmin(admin.ModelAdmin):
-    list_display = ('car_number', 'status', 'last_update', 'created_at', 'updated_at')
+    list_display = ('id', 'car_number', 'status', 'last_update', 'created_at', 'updated_at')
     search_fields = ('car_number', 'status')
     list_filter = ('status', 'last_update')
     
