@@ -4,6 +4,7 @@ from car_system.services.read_files.sicar_loader import SicarRecordLoader
 from environmental_layers.services.load_data.phytoecology_loader import PhytoecologyLoader
 from environmental_layers.services.load_data.protection_area_loader import ProtectionAreaLoader
 from environmental_layers.services.load_data.zoning_loader import ZoningLoader
+from environmental_layers.services.load_data.indigenous_loader import IndigenousLoader
 
 
 class LoadAllDataService:
@@ -23,6 +24,7 @@ class LoadAllDataService:
         zoning_data = ZoningLoader.load()
         phyto_data = PhytoecologyLoader.load()
         protection_area_data = ProtectionAreaLoader.load()
+        indigenous_data = IndigenousLoader.load() 
 
         pipeline = [
             {
@@ -44,6 +46,11 @@ class LoadAllDataService:
                 "loader": ProtectionAreaLoader,
                 "base_name": "Base de Dados de APAs",
                 "data": protection_area_data,
+            },
+            {
+                "loader": IndigenousLoader,
+                "base_name": "Base de Dados de Indígenas",
+                "data": indigenous_data,
             },
         ]
 
