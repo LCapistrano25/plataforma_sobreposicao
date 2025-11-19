@@ -141,7 +141,7 @@ class UploadZipCarView(View):
     def _process_coordinates(self, request, coordenadas_input, car_input):
         """Processa os dados extraídos do shapefile."""
         try:
-            resultado = SearchAll().execute(coordenadas_input, car_input)
+            resultado = SearchAll().execute(coordenadas_input)
 
             municipio, uf = None, None
             try:
@@ -165,3 +165,6 @@ class UploadZipCarView(View):
                 'car_input': car_input,
                 'sucesso': False
             })
+
+def termos(request):
+    return render(request, 'analysis/termos_de_uso.html')

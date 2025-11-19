@@ -8,6 +8,7 @@ class FileManagementAdmin(admin.ModelAdmin):
         'environmental_protection_zip_file',
         'zoning_zip_file',
         'sicar_zip_file',
+        'indigenous_zip_file',
     )
     
     list_display_links = (
@@ -15,6 +16,7 @@ class FileManagementAdmin(admin.ModelAdmin):
         'environmental_protection_zip_file',
         'zoning_zip_file',
         'sicar_zip_file',
+        'indigenous_zip_file',
     )
     
     search_fields = (
@@ -22,6 +24,7 @@ class FileManagementAdmin(admin.ModelAdmin):
         'environmental_protection_zip_file',
         'zoning_zip_file',
         'sicar_zip_file',
+        'indigenous_zip_file',
     )
     
     def has_add_permission(self, request):
