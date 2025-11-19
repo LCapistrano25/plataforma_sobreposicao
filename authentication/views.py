@@ -29,4 +29,4 @@ def login_view(request: HttpRequest):
 @require_http_methods(["POST", "GET"]) 
 def logout_view(request: HttpRequest):
     logout(request)
-    return redirect('/')
+    return redirect('/accounts/login/')
