@@ -86,7 +86,6 @@ staticfiles/
 Thumbs.db
 
 # Diretórios específicos do projeto
-shp/
-csvvv/
-Excel/
+shps/
 documents/
+.DS_Store
