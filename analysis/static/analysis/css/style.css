@@ -441,4 +441,20 @@ body {
     .hero-title {
         font-size: 20px;
     }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-title {
+        font-size: 20px;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-title {
+        font-size: 20px;
+    }
 }

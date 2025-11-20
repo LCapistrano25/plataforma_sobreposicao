@@ -80,6 +80,7 @@
                             fill-rule="evenodd"></path>
                     </svg>
                 </button>
+                <a href="{% url 'termos_de_uso' %}"><h5>Termos de Uso</h5></a>
 
             </form>
 
@@ -93,6 +94,9 @@
             <div class="status-error">❌ {{ erro }}</div>
             {% endif %}
 
+            <div style="margin-top:12px">
+              <a href="{% url 'login' %}" class="btn btn-secondary">🔐 Fazer login</a>
+            </div>
         </div>
     </div>
     {% include 'analysis/loader.html' %}

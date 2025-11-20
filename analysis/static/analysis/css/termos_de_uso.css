@@ -1,0 +1,162 @@
+/* --- Configurações Globais e Reset --- */
+:root {
+    --color-background: #ffffff;       /* Fundo branco limpo */
+    --color-background-soft: #f9f9f9;  /* Fundo sutilmente cinza */
+    --color-text: #333333;             /* Texto principal (escuro, não preto) */
+    --color-text-light: #555555;       /* Texto secundário (parágrafos) */
+    --color-heading: #111111;          /* Títulos (bem escuros) */
+    --color-border: #eaeaea;           /* Bordas suaves */
+    --color-link: #222222;             /* Links (escuros e sóbrios) */
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --max-width: 800px;                /* Largura máxima para legibilidade */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    line-height: 1.7;
+    background-color: var(--color-background);
+    color: var(--color-text-light);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Layout do Container --- */
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 700;
+    color: var(--color-heading);
+    text-decoration: none;
+}
+
+/* Estilos de .nav-links e .nav-button-login removidos daqui */
+
+/* --- Conteúdo Principal (Termos) --- */
+.content-wrapper {
+    padding: 64px 0; /* Espaçamento generoso */
+}
+
+.terms-header {
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+}
+
+.terms-header h1 {
+    font-size: 2.5rem; /* 40px */
+    font-weight: 700;
+    color: var(--color-heading);
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.last-updated {
+    font-size: 0.9rem; /* 14.4px */
+    color: var(--color-text-light);
+}
+
+.terms-content section {
+    margin-bottom: 40px;
+}
+
+.terms-content h2 {
+    font-size: 1.5rem; /* 24px */
+    font-weight: 600;
+    color: var(--color-heading);
+    margin-bottom: 16px;
+    padding-top: 16px; /* Espaço antes do título da seção */
+}
+
+.terms-content p {
+    margin-bottom: 16px;
+    color: var(--color-text-light);
+}
+
+.terms-content a {
+    color: var(--color-link);
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid #ddd;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.terms-content a:hover {
+    color: #000;
+    border-bottom-color: #333;
+}
+
+.terms-content ul,
+.terms-content ol {
+    margin-left: 20px;
+    padding-left: 16px;
+    margin-bottom: 16px;
+}
+
+.terms-content li {
+    margin-bottom: 10px;
+}
+
+/* --- Botão Voltar --- */
+.back-button-wrapper {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-border);
+    text-align: left; /* Alinha o botão à esquerda */
+}
+
+.back-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: var(--font-primary);
+    color: var(--color-heading);
+    background-color: var(--color-background-soft);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.back-button:hover {
+    background-color: #f0f0f0;
+    border-color: #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Estilos do Rodapé Removidos --- */
+
+/* --- Responsividade --- */
+@media (max-width: 768px) {
+    /* Estilo .nav-links removido daqui */
+
+    .terms-header h1 {
+        font-size: 2rem; /* 32px */
+    }
+
+    .terms-content h2 {
+        font-size: 1.25rem; /* 20px */
+    }
+
+    .content-wrapper {
+        padding: 40px 0;
+    }
+}
